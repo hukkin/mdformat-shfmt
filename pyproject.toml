@@ -1,0 +1,63 @@
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+
+[tool.poetry]
+name = "mdformat-shfmt"
+version = "0.0.0"  # DO NOT EDIT THIS LINE MANUALLY. LET bump2version UTILITY DO IT
+authors = ["Taneli Hukkinen <hukkinj1@users.noreply.github.com>"]
+description = "Mdformat plugin to format shell code blocks"
+repository = "https://github.com/hukkinj1/mdformat-shfmt"
+readme = "README.md"
+license = "MIT"
+classifiers = [
+    "Topic :: Documentation",
+    "Topic :: Text Processing :: Markup",
+#    "Typing :: Typed",
+]
+keywords = ["mdformat", "markdown", "commonmark", "formatter", "bash", "shell"]
+
+packages = [
+    {include = "mdformat_shfmt"},
+]
+#include = ["mdformat_shfmt/py.typed"]
+
+#[tool.poetry.urls]
+#"Changelog" = "https://github.com/hukkinj1/mdformat-shfmt/blob/master/CHANGELOG.md"
+
+[tool.poetry.plugins."mdformat.codeformatter"]
+"sh" = "mdformat_shfmt:format_sh"
+"bash" = "mdformat_shfmt:format_sh"
+
+[tool.poetry.dependencies]
+python = "^3.6.1"
+mdformat = ">=0.3.5"
+
+[tool.poetry.dev-dependencies]
+# Tests
+pytest = "*"
+pytest-randomly = "*"
+
+# Tools
+pre-commit = "*"
+bump2version = "*"
+
+
+[tool.isort]
+skip = ["venv"]
+# Force imports to be sorted by module, independent of import type
+force_sort_within_sections = true
+# Group first party and local folder imports together
+no_lines_before = ["LOCALFOLDER"]
+
+# Configure isort to work without access to site-packages
+known_first_party = ["mdformat_shfmt", "tests"]
+
+# Settings for Black compatibility
+profile = "black"
+
+
+[tool.pytest.ini_options]
+addopts = "--strict-markers --strict-config"
+xfail_strict = true
