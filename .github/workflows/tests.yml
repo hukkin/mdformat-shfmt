@@ -29,14 +29,24 @@ jobs:
 
     - name: Installation
       run: |
-        GO111MODULE=on go get mvdan.cc/sh/v3/cmd/shfmt
+        go env -w GO111MODULE=on
+        go get mvdan.cc/sh/v3/cmd/shfmt
         pip install "poetry==1.1.4"
         poetry config virtualenvs.create false && poetry install --no-interaction --no-ansi
+
+    - name: Install docker on macOS (Windows and Ubuntu have it already)
+      uses: docker-practice/actions-setup-docker@v1
+      if: matrix.os == 'macos-latest'
 
     - name: Linters
       if: matrix.os == 'ubuntu-latest' && matrix.python-version == '3.6'
       run: |
         pre-commit run -a
+
+    - name: Show versions
+      run: |
+        shfmt --version
+        docker --version
 
     - name: Test with pytest
       run: |
