@@ -20,3 +20,7 @@ The plugin invokes shfmt in a subprocess so having either shfmt or Docker instal
 ```bash
 mdformat YOUR_MARKDOWN_FILE.md
 ```
+
+## Limitations
+Formatting with Docker is not tested on Windows.
+If you experience issues on Windows, install shfmt.
