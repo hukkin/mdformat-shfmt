@@ -29,7 +29,8 @@ jobs:
 
     - name: Installation
       run: |
-        GO111MODULE=on go get mvdan.cc/sh/v3/cmd/shfmt
+        go env -w GO111MODULE=on
+        go get mvdan.cc/sh/v3/cmd/shfmt
         pip install "poetry==1.1.4"
         poetry config virtualenvs.create false && poetry install --no-interaction --no-ansi
 
