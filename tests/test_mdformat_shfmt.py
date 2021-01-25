@@ -1,4 +1,6 @@
 from pathlib import Path
+import subprocess
+from unittest.mock import patch
 
 from markdown_it.utils import read_fixture_file
 import mdformat
@@ -34,3 +36,34 @@ $[
     assert not captured.err
     assert not captured.out
     assert result == formatted_md
+
+
+def test_docker():
+    """Test Docker fallback if shfmt not installed."""
+    input_ = """\
+~~~sh
+function func1()
+{
+echo "test"
+  }
+~~~
+"""
+    expected_output = """\
+```sh
+function func1() {
+\techo "test"
+}
+```
+"""
+
+    unmocked_run = subprocess.run
+
+    def no_shfmt_run(*args, **kwargs):
+        """Make subprocess.run think that `shfmt` is not installed."""
+        if args[0][0] == "shfmt":
+            raise FileNotFoundError
+        return unmocked_run(*args, **kwargs)
+
+    with patch("mdformat_shfmt.subprocess.run", new=no_shfmt_run):
+        output = mdformat.text(input_, codeformatters={"sh"})
+    assert output == expected_output

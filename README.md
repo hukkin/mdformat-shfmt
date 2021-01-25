@@ -10,7 +10,7 @@ that makes mdformat format shell code blocks embedded in Markdown with [shfmt](h
 The plugin invokes shfmt in a subprocess so having either shfmt or Docker installed is a requirement.
 
 ## Installing
-1. [Install shfmt](https://github.com/mvdan/sh#shfmt) or [Docker](https://docs.docker.com/get-docker/)
+1. Install either [shfmt](https://github.com/mvdan/sh#shfmt) or [Docker](https://docs.docker.com/get-docker/)
 1. Install mdformat-shfmt
    ```bash
    pip install mdformat-shfmt
