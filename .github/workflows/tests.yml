@@ -41,6 +41,8 @@ jobs:
 
     - name: Test with pytest
       run: |
+        docker --help
+        docker --version
         pytest
 
   pypi-publish:
