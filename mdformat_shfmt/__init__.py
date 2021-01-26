@@ -21,6 +21,8 @@ def format_sh(unformatted: str, _info_str: str) -> str:
             )
     except Exception as e:
         import traceback
+
+        print(e)
         print(traceback.print_exc())
         raise
     if result.returncode:
