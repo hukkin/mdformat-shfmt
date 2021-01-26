@@ -7,7 +7,7 @@ def format_sh(unformatted: str, _info_str: str) -> str:
     unformatted_bytes = unformatted.encode("utf-8")
     subprocess_kwargs = {
         "stdout": subprocess.PIPE,
-        "stderr": subprocess.DEVNULL,
+        # "stderr": subprocess.DEVNULL,
         "input": unformatted_bytes,
     }
     try:
