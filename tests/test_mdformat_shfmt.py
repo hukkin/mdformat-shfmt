@@ -1,6 +1,5 @@
 from pathlib import Path
 import subprocess
-import sys
 from unittest.mock import patch
 
 from markdown_it.utils import read_fixture_file
@@ -40,11 +39,6 @@ $[
     assert result == formatted_md
 
 
-@pytest.mark.skipif(
-    sys.platform.startswith("win"),
-    reason="Docker fallback failed in CI on Windows."
-    " I don't have a Win environment for debugging...",
-)
 def test_docker():
     """Test Docker fallback if shfmt not installed."""
     input_ = """\
