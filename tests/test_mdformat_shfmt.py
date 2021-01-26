@@ -22,6 +22,7 @@ def test_fixtures(line, title, text, expected):
     assert md_new == expected
 
 
+@pytest.mark.skip
 def test_shfmt_error(capfd):
     """Test that any prints by shfmt go to devnull."""
     unformatted_md = """~~~bash

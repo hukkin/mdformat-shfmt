@@ -11,13 +11,19 @@ def format_sh(unformatted: str, _info_str: str) -> str:
         "input": unformatted_bytes,
     }
     try:
-        result = subprocess.run(["shfmt"], **subprocess_kwargs)
-    except FileNotFoundError:
-        # If `shfmt` is not installed, try Docker
-        result = subprocess.run(
-            ["docker", "run", "-i", "--rm", "mvdan/shfmt:latest", "-"],
-            **subprocess_kwargs
-        )
+        try:
+            result = subprocess.run(["shfmt"], **subprocess_kwargs)
+        except FileNotFoundError:
+            # If `shfmt` is not installed, try Docker
+            result = subprocess.run(
+                ["docker", "run", "-i", "--rm", "mvdan/shfmt:latest", "-"],
+                **subprocess_kwargs
+            )
+    except Exception as e:
+        import traceback
+        print(traceback.print_exc())
+        raise
     if result.returncode:
+        print('Exception("Failed to format shell code")')
         raise Exception("Failed to format shell code")
     return result.stdout.decode("utf-8")
