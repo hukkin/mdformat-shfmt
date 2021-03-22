@@ -22,5 +22,5 @@ mdformat YOUR_MARKDOWN_FILE.md
 ```
 
 ## Limitations
-Formatting with Docker is not tested on Windows.
-If you experience issues on Windows, install shfmt.
+The Docker fallback is only tested on Linux.
+If you experience issues with it on Windows or macOS, please install shfmt.

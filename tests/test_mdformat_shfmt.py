@@ -40,9 +40,10 @@ $[
 
 
 @pytest.mark.skipif(
-    sys.platform.startswith("win"),
+    sys.platform != "linux",
     reason="Docker fallback failed in CI on Windows."
-    " I don't have a Win environment for debugging...",
+    " On macOS GitHub Actions CI doesn't provide Docker."
+    " So we only test Docker on Linux.",
 )
 def test_docker():
     """Test Docker fallback if shfmt not installed."""
