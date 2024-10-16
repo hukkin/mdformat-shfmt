@@ -6,9 +6,9 @@ build-backend = "poetry.core.masonry.api"
 [tool.poetry]
 name = "mdformat-shfmt"
 version = "0.1.0"  # DO NOT EDIT THIS LINE MANUALLY. LET bump2version UTILITY DO IT
-authors = ["Taneli Hukkinen <hukkinj1@users.noreply.github.com>"]
+authors = ["Taneli Hukkinen <hukkin@users.noreply.github.com>"]
 description = "Mdformat plugin to format shell code blocks"
-repository = "https://github.com/hukkinj1/mdformat-shfmt"
+repository = "https://github.com/hukkin/mdformat-shfmt"
 readme = "README.md"
 license = "MIT"
 classifiers = [
@@ -24,14 +24,14 @@ packages = [
 #include = ["mdformat_shfmt/py.typed"]
 
 #[tool.poetry.urls]
-#"Changelog" = "https://github.com/hukkinj1/mdformat-shfmt/blob/master/CHANGELOG.md"
+#"Changelog" = "https://github.com/hukkin/mdformat-shfmt/blob/master/CHANGELOG.md"
 
 [tool.poetry.plugins."mdformat.codeformatter"]
 "sh" = "mdformat_shfmt:format_sh"
 "bash" = "mdformat_shfmt:format_sh"
 
 [tool.poetry.dependencies]
-python = "^3.6.1"
+python = ">=3.9"
 mdformat = ">=0.3.5"
 
 [tool.poetry.dev-dependencies]
