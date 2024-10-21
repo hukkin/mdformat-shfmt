@@ -37,12 +37,13 @@ jobs:
     - name: Linters
       if: matrix.os == 'ubuntu-latest' && matrix.python-version == '3.11'
       run: |
-        pre-commit run -a
+        pre-commit run --all-files
 
     - name: Show versions
       run: |
         shfmt --version
         docker --version || echo "Docker not installed"
+        podman --version || echo "Podman not installed"
 
     - name: Test with pytest
       run: |

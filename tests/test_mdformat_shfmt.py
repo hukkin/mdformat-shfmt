@@ -74,3 +74,35 @@ function func1() {
     with patch("mdformat_shfmt.subprocess.run", new=no_shfmt_run):
         output = mdformat.text(input_, codeformatters={"sh"})
     assert output == expected_output
+
+
+def test_podman():
+    """Test Podman fallback if shfmt or docker not installed."""
+    input_ = """\
+~~~sh
+function func1()
+{
+echo "test"
+  }
+~~~
+"""
+    expected_output = """\
+```sh
+function func1() {
+\techo "test"
+}
+```
+"""
+
+    unmocked_run = subprocess.run
+
+    def no_shfmt_no_docker_run(*args, **kwargs):
+        """Make subprocess.run think that `shfmt` and `docker` are not
+        installed."""
+        if args[0][0] in {"shfmt", "docker"}:
+            raise FileNotFoundError
+        return unmocked_run(*args, **kwargs)
+
+    with patch("mdformat_shfmt.subprocess.run", new=no_shfmt_no_docker_run):
+        output = mdformat.text(input_, codeformatters={"sh"})
+    assert output == expected_output
