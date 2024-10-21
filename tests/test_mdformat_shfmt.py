@@ -76,6 +76,12 @@ function func1() {
     assert output == expected_output
 
 
+@pytest.mark.skipif(
+    sys.platform != "linux",
+    reason="Docker fallback failed in CI on Windows."
+    " On macOS GitHub Actions CI doesn't provide Docker."
+    " So we only test Docker on Linux.",
+)
 def test_podman():
     """Test Podman fallback if shfmt or docker not installed."""
     input_ = """\
