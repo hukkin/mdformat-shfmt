@@ -67,7 +67,7 @@ function func1() {
 
     def no_shfmt_run(*args, **kwargs):
         """Make subprocess.run think that `shfmt` is not installed."""
-        if args[0][0] == "shfmt":
+        if args[0][0] in {"shfmt", "podman"}:
             raise FileNotFoundError
         return unmocked_run(*args, **kwargs)
 
