@@ -42,8 +42,8 @@ $[
 @pytest.mark.skipif(
     sys.platform != "linux",
     reason="Docker fallback failed in CI on Windows."
-    " On macOS GitHub Actions CI doesn't provide Docker."
-    " So we only test Docker on Linux.",
+    " On macOS GitHub Actions CI doesn't provide Docker or Podman."
+    " So we only test on Linux.",
 )
 def test_docker():
     """Test Docker fallback if shfmt not installed."""
@@ -67,10 +67,48 @@ function func1() {
 
     def no_shfmt_run(*args, **kwargs):
         """Make subprocess.run think that `shfmt` is not installed."""
-        if args[0][0] == "shfmt":
+        if args[0][0] in {"shfmt", "podman"}:
             raise FileNotFoundError
         return unmocked_run(*args, **kwargs)
 
     with patch("mdformat_shfmt.subprocess.run", new=no_shfmt_run):
+        output = mdformat.text(input_, codeformatters={"sh"})
+    assert output == expected_output
+
+
+@pytest.mark.skipif(
+    sys.platform != "linux",
+    reason="Docker fallback failed in CI on Windows."
+    " On macOS GitHub Actions CI doesn't provide Docker or Podman."
+    " So we only test on Linux.",
+)
+def test_podman():
+    """Test Podman fallback if shfmt or docker not installed."""
+    input_ = """\
+~~~sh
+function func1()
+{
+echo "test"
+  }
+~~~
+"""
+    expected_output = """\
+```sh
+function func1() {
+\techo "test"
+}
+```
+"""
+
+    unmocked_run = subprocess.run
+
+    def no_shfmt_no_docker_run(*args, **kwargs):
+        """Make subprocess.run think that `shfmt` and `docker` are not
+        installed."""
+        if args[0][0] in {"shfmt", "docker"}:
+            raise FileNotFoundError
+        return unmocked_run(*args, **kwargs)
+
+    with patch("mdformat_shfmt.subprocess.run", new=no_shfmt_no_docker_run):
         output = mdformat.text(input_, codeformatters={"sh"})
     assert output == expected_output

@@ -7,10 +7,10 @@
 ## Description
 mdformat-shfmt is an [mdformat](https://github.com/executablebooks/mdformat) plugin
 that makes mdformat format shell code blocks embedded in Markdown with [shfmt](https://github.com/mvdan/sh).
-The plugin invokes shfmt in a subprocess so having either shfmt or Docker installed is a requirement.
+The plugin invokes shfmt in a subprocess so having either shfmt, Docker or Podman installed is a requirement.
 
 ## Installing
-1. Install either [shfmt](https://github.com/mvdan/sh#shfmt) or [Docker](https://docs.docker.com/get-docker/)
+1. Install either [shfmt](https://github.com/mvdan/sh#shfmt), [Docker](https://docs.docker.com/get-docker/) or [Podman](https://podman.io/docs/installation)
 1. Install mdformat-shfmt
    ```bash
    pip install mdformat-shfmt
@@ -22,5 +22,5 @@ mdformat YOUR_MARKDOWN_FILE.md
 ```
 
 ## Limitations
-The Docker fallback is only tested on Linux.
+The Docker/Podman fallback is only tested on Linux.
 If you experience issues with it on Windows or macOS, please install shfmt.
