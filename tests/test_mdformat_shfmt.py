@@ -1,6 +1,6 @@
+import os
 from pathlib import Path
 import subprocess
-import sys
 from unittest.mock import patch
 
 from markdown_it.utils import read_fixture_file
@@ -40,7 +40,7 @@ $[
 
 
 @pytest.mark.skipif(
-    sys.platform != "linux",
+    os.name == "nt",
     reason="Docker fallback failed in CI on Windows."
     " On macOS GitHub Actions CI doesn't provide Docker."
     " So we only test Docker on Linux.",
@@ -77,7 +77,7 @@ function func1() {
 
 
 @pytest.mark.skipif(
-    sys.platform != "linux",
+    os.name == "nt",
     reason="Docker fallback failed in CI on Windows."
     " On macOS GitHub Actions CI doesn't provide Docker."
     " So we only test Docker on Linux.",

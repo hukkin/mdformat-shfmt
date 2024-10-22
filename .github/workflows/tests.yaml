@@ -39,9 +39,13 @@ jobs:
       run: |
         pre-commit run --all-files
 
-    - name: Show versions
+    - name: Show shfmt version
       run: |
         shfmt --version
+
+    - name: Show more versions on non-Windows
+      if: matrix.os != 'windows-latest'
+      run: |
         docker --version || echo "Docker not installed"
         podman --version || echo "Podman not installed"
 
