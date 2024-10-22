@@ -1,6 +1,6 @@
-import os
 from pathlib import Path
 import subprocess
+import sys
 from unittest.mock import patch
 
 from markdown_it.utils import read_fixture_file
@@ -40,10 +40,10 @@ $[
 
 
 @pytest.mark.skipif(
-    os.name == "nt",
+    sys.platform != "linux",
     reason="Docker fallback failed in CI on Windows."
-    " On macOS GitHub Actions CI doesn't provide Docker."
-    " So we only test Docker on Linux.",
+    " On macOS GitHub Actions CI doesn't provide Docker or Podman."
+    " So we only test on Linux.",
 )
 def test_docker():
     """Test Docker fallback if shfmt not installed."""
@@ -77,10 +77,10 @@ function func1() {
 
 
 @pytest.mark.skipif(
-    os.name == "nt",
+    sys.platform != "linux",
     reason="Docker fallback failed in CI on Windows."
-    " On macOS GitHub Actions CI doesn't provide Docker."
-    " So we only test Docker on Linux.",
+    " On macOS GitHub Actions CI doesn't provide Docker or Podman."
+    " So we only test on Linux.",
 )
 def test_podman():
     """Test Podman fallback if shfmt or docker not installed."""
